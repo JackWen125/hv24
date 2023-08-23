@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Check-in</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Medical Check-in Portal</h1>
+    </header>
+
+    <section id="doctor-login">
+        <h2>Doctor Sign In</h2>
+        <form action="#" method="post">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Sign In</button>
+        </form>
+    </section>
+
+    <section id="patient-checkin" style="display:none;">
+        <h2>Patient Check-in</h2>
+        <form action="#" method="post" id="patient-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+            <button type="submit">Check In</button>
+        </form>
+    </section>
+
+    <section id="provider-page" style="display:none;">
+        <h2>Provider Page</h2>
+        <div id="patient-info"></div>
+        <button id="generate-zoom-link">Generate Zoom Link</button>
+        <div id="zoom-link" style="display:none;">
+            <p>Zoom Link:</p>
+            <a id="zoom-link-url" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+    </section>
+
+    <script>
+        const doctorPassword = "Hvcpa123";
+        const doctorSignInSection = document.getElementById("doctor-login");
+        const patientCheckInSection = document.getElementById("patient-checkin");
+        const providerPageSection = document.getElementById("provider-page");
+        const patientInfoDiv = document.getElementById("patient-info");
+        const zoomLinkSection = document.getElementById("zoom-link");
+        const zoomLinkUrl = document.getElementById("zoom-link-url");
+        const patientForm = document.getElementById("patient-form");
+        const generateZoomLinkButton = document.getElementById("generate-zoom-link");
+
+        doctorSignInSection.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const passwordInput = event.target.elements.password;
+            if (passwordInput.value === doctorPassword) {
+                doctorSignInSection.style.display = "none";
+                patientCheckInSection.style.display = "block";
+            } else {
+                alert("Incorrect password. Please try again.");
+                passwordInput.value = "";
+            }
+        });
+
+        patientForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const name = event.target.elements.name.value;
+            const dob = event.target.elements.dob.value;
+            patientInfoDiv.innerHTML = `<p>Name: ${name}</p><p>Date of Birth: ${dob}</p>`;
+            providerPageSection.style.display = "block";
+        });
+
+        generateZoomLinkButton.addEventListener("click", () => {
+            const zoomMeetingLink = "YOUR_ZOOM_MEETING_LINK_HERE";
+            zoomLinkUrl.href = zoomMeetingLink;
+            zoomLinkUrl.textContent = zoomMeetingLink;
+            zoomLinkSection.style.display = "block";
+        });
+    </script>
+</body>
+</html>
